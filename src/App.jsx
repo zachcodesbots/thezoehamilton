@@ -100,13 +100,13 @@ export default function App() {
         <div className="footer-left">
           <h3>thezoehamilton</h3>
           <p>
-            123 Theatre Lane
+            Sliema, Malta
             <br />
-            London, UK
+            Masquerade Blue Box Theatre
           </p>
         </div>
         <div className="footer-right">
-          <p>contact@thezoehamilton.com</p>
+          <p>thezoehamilton@gmail.com</p>
           <p>@thezoehamilton</p>
         </div>
       </footer>
