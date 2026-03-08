@@ -13,7 +13,7 @@ const images = [
     id: 1,
     src: hamilton,
     title: "Hamilton | Burr",
-    subtitle: "Drama Showcase 2024",
+    subtitle: "Drama Showcase 2025",
     link: "https://www.instagram.com/p/DKxHysToosg/?igsh=MTF0Z3FyMmpjbTQ4aw==",
   },
   {
@@ -41,7 +41,7 @@ const images = [
     id: 5,
     src: ista,
     title: "ISTA Global Learning Through The Arts | Participant",
-    subtitle: "Siracusa: Exploring The Space Between",
+    subtitle: "Siracusa | Exploring The Space Between",
     link: "https://www.instagram.com/p/DPG7lVSiKa1/?igsh=MWVzZzEyZnRnMW81Yg==",
   },
   {
