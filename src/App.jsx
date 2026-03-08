@@ -4,10 +4,7 @@ import "./App.css";
 import teenqueen from "./assets/teenqueen.jpg";
 import hamilton from "./assets/hamilton.jpg";
 import immerse from "./assets/immerse.jpg";
-import worldburn from "./assets/worldburn.jpeg";
-import alibaba from "./assets/alibaba.jpeg";
-import ista from "./assets/ista.jpeg";
-
+import 
 const images = [
   {
     id: 1,
@@ -25,40 +22,37 @@ const images = [
   },
   {
     id: 3,
-    src: immerse,
-    title: "Immerse Essay Competition | Honours",
-    subtitle: "Writing Excellence Award",
-    link: "https://www.instagram.com/p/DQCqLsYiOZ_/?igsh=MTNta3FudXd0czNhYw==",
-  },
-  {
-    id: 4,
     src: worldburn,
     title: "World Burn | Kady Heron",
     subtitle: "Drama Showcase",
     link: "https://www.instagram.com/p/DQCqLsYiOZ_/?igsh=MTNta3FudXd0czNhYw==",
   },
   {
-    id: 5,
+    id: 4,
     src: alibaba,
     title: "Alibaba Pantomime Malta | Ensemble",
     subtitle: "Two week show",
-    link: "https://www.instagram.com/p/DQCqLsYiOZ_/?igsh=MTNta3FudXd0czNhYw==",
+    link: "https://www.instagram.com/p/DTa4-TziLNU/?igsh=MjVsejl1cWI1ZHFl",
   },
   {
-    id: 6,
+    id: 5,
     src: ista,
     title: "ISTA Trip | Participant",
     subtitle: "Invitation only training",
-    link: "https://www.instagram.com/p/DQCqLsYiOZ_/?igsh=MTNta3FudXd0czNhYw==",
+    link: "https://www.instagram.com/p/DPG7lVSiKa1/?igsh=MWVzZzEyZnRnMW81Yg==",
+  },
+  {
+    id: 6,
+    src: immerse,
+    title: "Immerse Essay Competition | Honours",
+    subtitle: "Writing Excellence Award",
+    link: "https://www.instagram.com/p/DPEDTC-DABd/?igsh=MWt1ZXg2NnN0ZzdhNg==",
   },
 ];
 
 export default function App() {
   const sectionsRef = useRef([]);
   const [bgColors, setBgColors] = useState({});
-  const [scrolled, setScrolled] = useState(false);
-  const cursorRef = useRef(null);
-  const cursorDotRef = useRef(null);
 
   // Extract dominant color from each image
   const getAverageColor = (src, id) => {
@@ -72,7 +66,11 @@ export default function App() {
       canvas.height = img.height;
       ctx.drawImage(img, 0, 0, img.width, img.height);
       const data = ctx.getImageData(0, 0, img.width, img.height).data;
-      let r = 0, g = 0, b = 0, count = 0;
+
+      let r = 0,
+        g = 0,
+        b = 0,
+        count = 0;
       for (let i = 0; i < data.length; i += 4 * 100) {
         r += data[i];
         g += data[i + 1];
@@ -90,14 +88,7 @@ export default function App() {
     images.forEach(img => getAverageColor(img.src, img.id));
   }, []);
 
-  // Scroll-triggered header border
-  useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 20);
-    window.addEventListener("scroll", onScroll);
-    return () => window.removeEventListener("scroll", onScroll);
-  }, []);
-
-  // Blur-sharpen scroll reveal
+  // Fade-in effect
   useEffect(() => {
     const observer = new IntersectionObserver(
       entries => {
@@ -105,7 +96,7 @@ export default function App() {
           if (entry.isIntersecting) entry.target.classList.add("visible");
         });
       },
-      { threshold: 0.15 }
+      { threshold: 0.2 }
     );
     sectionsRef.current.forEach(section => {
       if (section) observer.observe(section);
@@ -113,55 +104,13 @@ export default function App() {
     return () => observer.disconnect();
   }, []);
 
-  // Custom cursor
-  useEffect(() => {
-    const cursor = cursorRef.current;
-    const dot = cursorDotRef.current;
-    if (!cursor || !dot) return;
-
-    let mouseX = 0, mouseY = 0;
-    let curX = 0, curY = 0;
-
-    const moveCursor = (e) => {
-      mouseX = e.clientX;
-      mouseY = e.clientY;
-      dot.style.left = mouseX + "px";
-      dot.style.top = mouseY + "px";
-    };
-
-    const animateCursor = () => {
-      curX += (mouseX - curX) * 0.12;
-      curY += (mouseY - curY) * 0.12;
-      cursor.style.left = curX + "px";
-      cursor.style.top = curY + "px";
-      requestAnimationFrame(animateCursor);
-    };
-
-    window.addEventListener("mousemove", moveCursor);
-    animateCursor();
-
-    const links = document.querySelectorAll("a, .contact-link");
-    links.forEach(el => {
-      el.addEventListener("mouseenter", () => cursor.classList.add("expanded"));
-      el.addEventListener("mouseleave", () => cursor.classList.remove("expanded"));
-    });
-
-    return () => window.removeEventListener("mousemove", moveCursor);
-  }, []);
-
   const scrollToFooter = () => {
     document.getElementById("footer")?.scrollIntoView({ behavior: "smooth" });
   };
 
-  const durations = ["1.0s", "1.3s", "1.1s", "1.2s", "1.0s", "1.15s"];
-
   return (
     <div className="app">
-      {/* Custom cursor */}
-      <div className="cursor-ring" ref={cursorRef}></div>
-      <div className="cursor-dot" ref={cursorDotRef}></div>
-
-      <header className={`header${scrolled ? " header--scrolled" : ""}`}>
+      <header className="header">
         <div className="logo">thezoehamilton</div>
         <div className="contact-link" onClick={scrollToFooter}>
           contact
@@ -177,22 +126,15 @@ export default function App() {
             style={{
               backgroundColor: bgColors[img.id] || "#000",
               transition: "background-color 1s ease",
-              "--reveal-duration": durations[i % durations.length],
             }}
           >
             <a href={img.link} target="_blank" rel="noreferrer">
-            <div className="image-wrapper">
-                <img src={img.src} alt={img.title} className="blur-edge" aria-hidden="true" />
-                <div className="image-frame">
-                  <img src={img.src} alt={img.title} className="fade-image" />
-                </div>
+              <div className="image-wrapper">
+                <img src={img.src} alt={img.title} className="fade-image" />
                 <div className="overlay"></div>
-                <div className="vignette"></div>
-                <div className="image-text">
-                  <div className="text-inner">
-                    <h2 className="glass-text">{img.title}</h2>
-                    <p className="glass-text">{img.subtitle}</p>
-                  </div>
+                <div className="image-text glass-text">
+                  <h2>{img.title}</h2>
+                  <p>{img.subtitle}</p>
                 </div>
               </div>
             </a>
@@ -200,21 +142,18 @@ export default function App() {
         ))}
       </main>
 
-      <footer id="footer" className="footer">
-        <div className="footer-divider"></div>
-        <div className="footer-content">
-          <div className="footer-left">
-            <h3 className="glass-text">thezoehamilton</h3>
-            <p className="glass-text">
-              Sliema, Malta
-              <br />
-              Masquerade Blue Box Theatre
-            </p>
-          </div>
-          <div className="footer-right">
-            <p><span className="footer-link glass-text">thezoehamilton@gmail.com</span></p>
-            <p><span className="footer-link glass-text">@thezoehamilton</span></p>
-          </div>
+      <footer id="footer" className="footer glass-text">
+        <div className="footer-left">
+          <h3>thezoehamilton</h3>
+          <p>
+            Sliema, Malta
+            <br />
+            Masquerade Blue Box Theatre
+          </p>
+        </div>
+        <div className="footer-right">
+          <p>thezoehamilton@gmail.com</p>
+          <p>@thezoehamilton</p>
         </div>
       </footer>
     </div>
