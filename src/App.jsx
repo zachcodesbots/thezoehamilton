@@ -40,7 +40,7 @@ const images = [
   {
     id: 5,
     src: ista,
-    title: "ISTA Global Learning Through The Arts | Participant",
+    title: "ISTA: Global Learning Through The Arts | Participant",
     subtitle: "Siracusa | Exploring The Space Between",
     link: "https://www.instagram.com/p/DPG7lVSiKa1/?igsh=MWVzZzEyZnRnMW81Yg==",
   },
