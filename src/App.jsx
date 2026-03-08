@@ -55,60 +55,30 @@ const images = [
 
 export default function App() {
   const sectionsRef = useRef([]);
-  const [bgColors, setBgColors] = useState({});
-
-  // Extract dominant color from each image
-  const getAverageColor = (src, id) => {
-    const img = new Image();
-    img.crossOrigin = "anonymous";
-    img.src = src;
-    img.onload = () => {
-      const canvas = document.createElement("canvas");
-      const ctx = canvas.getContext("2d");
-      canvas.width = img.width;
-      canvas.height = img.height;
-      ctx.drawImage(img, 0, 0, img.width, img.height);
-      const data = ctx.getImageData(0, 0, img.width, img.height).data;
-
-      let r = 0,
-        g = 0,
-        b = 0,
-        count = 0;
-      for (let i = 0; i < data.length; i += 4 * 100) {
-        r += data[i];
-        g += data[i + 1];
-        b += data[i + 2];
-        count++;
-      }
-      r = Math.floor(r / count);
-      g = Math.floor(g / count);
-      b = Math.floor(b / count);
-      setBgColors(prev => ({ ...prev, [id]: `rgb(${r}, ${g}, ${b})` }));
-    };
-  };
-
-  useEffect(() => {
-    images.forEach(img => getAverageColor(img.src, img.id));
-  }, []);
 
   // Fade-in effect
   useEffect(() => {
     const observer = new IntersectionObserver(
       entries => {
         entries.forEach(entry => {
-          if (entry.isIntersecting) entry.target.classList.add("visible");
+          if (entry.isIntersecting) {
+            entry.target.classList.add("visible");
+          }
         });
       },
       { threshold: 0.2 }
     );
+
     sectionsRef.current.forEach(section => {
       if (section) observer.observe(section);
     });
+
     return () => observer.disconnect();
   }, []);
 
   const scrollToFooter = () => {
-    document.getElementById("footer")?.scrollIntoView({ behavior: "smooth" });
+    const footer = document.getElementById("footer");
+    footer?.scrollIntoView({ behavior: "smooth" });
   };
 
   return (
@@ -124,18 +94,17 @@ export default function App() {
         {images.map((img, i) => (
           <section
             key={img.id}
-            ref={el => (sectionsRef.current[i] = el)}
             className="image-section"
-            style={{
-              backgroundColor: bgColors[img.id] || "#000",
-              transition: "background-color 1s ease",
-            }}
+            ref={el => (sectionsRef.current[i] = el)}
           >
             <a href={img.link} target="_blank" rel="noreferrer">
               <div className="image-wrapper">
+                {/* Blurred border background */}
+                <img src={img.src} alt={img.title} className="blur-edge" />
+                {/* Main clear image */}
                 <img src={img.src} alt={img.title} className="fade-image" />
                 <div className="overlay"></div>
-                <div className="image-text glass-text">
+                <div className="image-text">
                   <h2>{img.title}</h2>
                   <p>{img.subtitle}</p>
                 </div>
@@ -145,7 +114,7 @@ export default function App() {
         ))}
       </main>
 
-      <footer id="footer" className="footer glass-text">
+      <footer id="footer" className="footer">
         <div className="footer-left">
           <h3>thezoehamilton</h3>
           <p>

@@ -1,13 +1,9 @@
-@import url('https://fonts.googleapis.com/css2?family=Italiana&display=swap');
-
 .app {
   background-color: #000;
   color: #fff;
-  font-family: "Times New Roman", Times, serif;
+  font-family: 'Times New Roman', serif;
   margin: 0;
   padding: 0;
-  -webkit-font-smoothing: antialiased;
-  text-rendering: optimizeLegibility;
 }
 
 /* Header */
@@ -19,31 +15,14 @@
 }
 
 .logo {
-  font-size: 2.2rem;
-  letter-spacing: 2px;
-  text-transform: lowercase;
-  font-weight: 400;
-  background: linear-gradient(
-    to bottom right,
-    rgba(255, 255, 255, 0.8),
-    rgba(255, 255, 255, 0.3)
-  );
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  backdrop-filter: blur(10px);
+  font-size: 1.8rem;
+  letter-spacing: 1px;
 }
 
 .contact-link {
   cursor: pointer;
   font-size: 1.1rem;
   transition: opacity 0.3s ease;
-  background: linear-gradient(
-    to bottom right,
-    rgba(255, 255, 255, 0.8),
-    rgba(255, 255, 255, 0.3)
-  );
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
 }
 
 .contact-link:hover {
@@ -117,6 +96,7 @@
   bottom: 2rem;
   left: 2rem;
   z-index: 3;
+  color: #fff;
 }
 
 .image-text h2 {
@@ -126,20 +106,7 @@
 
 .image-text p {
   font-size: 1rem;
-  opacity: 0.9;
-}
-
-/* glass / liquid text effect */
-.glass-text {
-  background: linear-gradient(
-    135deg,
-    rgba(255, 255, 255, 0.75),
-    rgba(255, 255, 255, 0.25)
-  );
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  backdrop-filter: blur(8px);
-  text-shadow: 0 0 10px rgba(255, 255, 255, 0.15);
+  opacity: 0.8;
 }
 
 /* footer */
