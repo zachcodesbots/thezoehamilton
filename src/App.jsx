@@ -13,14 +13,14 @@ const images = [
     id: 1,
     src: hamilton,
     title: "Hamilton | Burr",
-    subtitle: "Drama Showcase 2025",
+    subtitle: "Blue Box Theatre",
     link: "https://www.instagram.com/p/DKxHysToosg/?igsh=MTF0Z3FyMmpjbTQ4aw==",
   },
   {
     id: 2,
     src: teenqueen,
     title: "We Will Rock You | Teen Queen",
-    subtitle: "Musical Production",
+    subtitle: "Teatru Salesjan",
     link: "https://www.instagram.com/p/DIMGEg-IMgK/?igsh=MTh2aGF5ZG5oZnJxcQ==",
   },
   {
@@ -34,7 +34,7 @@ const images = [
     id: 4,
     src: alibaba,
     title: "Ali Baba — The Panto | Ensemble",
-    subtitle: "Manoel Theatre 23 Shows",
+    subtitle: "Manoel Theatre",
     link: "https://www.instagram.com/p/DTa4-TziLNU/?igsh=MjVsejl1cWI1ZHFl",
   },
   {
