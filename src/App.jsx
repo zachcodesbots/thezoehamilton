@@ -4,7 +4,10 @@ import "./App.css";
 import teenqueen from "./assets/teenqueen.jpg";
 import hamilton from "./assets/hamilton.jpg";
 import immerse from "./assets/immerse.jpg";
-import 
+import alibaba from "./assets/alibaba.jpeg";
+import worldburn from "./assets/worldburn.jpeg";
+import ista from "./assets/ista.jpeg";
+
 const images = [
   {
     id: 1,
