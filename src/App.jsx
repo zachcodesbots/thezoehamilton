@@ -27,7 +27,7 @@ const images = [
     id: 3,
     src: worldburn,
     title: "World Burn | Cady Heron",
-    subtitle: "Drama Showcase",
+    subtitle: "Blue Box Theatre",
     link: "https://www.instagram.com/p/DQCqLsYiOZ_/?igsh=MTNta3FudXd0czNhYw==",
   },
   {
