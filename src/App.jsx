@@ -26,22 +26,22 @@ const images = [
   {
     id: 3,
     src: worldburn,
-    title: "World Burn | Kady Heron",
+    title: "World Burn | Cady Heron",
     subtitle: "Drama Showcase",
     link: "https://www.instagram.com/p/DQCqLsYiOZ_/?igsh=MTNta3FudXd0czNhYw==",
   },
   {
     id: 4,
     src: alibaba,
-    title: "Alibaba Pantomime Malta | Ensemble",
-    subtitle: "Two week show",
+    title: "Ali Baba — The Panto | Ensemble",
+    subtitle: "Manoel Theatre 23 Shows",
     link: "https://www.instagram.com/p/DTa4-TziLNU/?igsh=MjVsejl1cWI1ZHFl",
   },
   {
     id: 5,
     src: ista,
-    title: "ISTA Trip | Participant",
-    subtitle: "Invitation only training",
+    title: "ISTA Global Learning Through The Arts | Participant",
+    subtitle: "Siracusa: Exploring The Space Between",
     link: "https://www.instagram.com/p/DPG7lVSiKa1/?igsh=MWVzZzEyZnRnMW81Yg==",
   },
   {
