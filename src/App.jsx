@@ -115,14 +115,14 @@ const activities = [
     sections: ["performing-arts"],
     src: sevenBridesShowcase,
     title: "7 Brides For 7 Brothers | Dance Showcase",
-    subtitle: "Teatru Salesjan",
+    subtitle: "Blue Box Theatre",
   },
   {
     id: 9,
     sections: ["performing-arts"],
     src: kissMeShowcase,
     title: "Kiss Me | Singing Showcase",
-    subtitle: "Vocal Performance",
+    subtitle: "Blue Box Theatre",
     link: "https://www.instagram.com/p/DatKP8JoNfN/",
   },
   {
