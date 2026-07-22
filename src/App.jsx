@@ -5,18 +5,53 @@ import teenqueen from "./assets/teenqueen.jpg";
 import hamilton from "./assets/hamilton.jpg";
 import immerse from "./assets/immerse.jpg";
 import alibaba from "./assets/alibaba.jpeg";
-import worldburn from "./assets/worldburn.jpeg";
 import ista from "./assets/ista.jpeg";
 import zoeHeadshot from "./assets/zoe-headshot.png";
 import internationalYouthDay from "./assets/international-youth-day.png";
 import learningToBeHeard from "./assets/learning-to-be-heard.png";
 import sevenBridesShowcase from "./assets/seven-brides-showcase.png";
 import sparkleQuizNight from "./assets/sparkle-quiz-night.png";
+import malawiMediaTrip from "./assets/malawi-media-trip.png";
+import worldburn from "./assets/worldburn-new.png";
+import kissMeShowcase from "./assets/kiss-me-showcase.png";
 
 const filters = [
   { id: "performing-arts", label: "performing arts" },
   { id: "leadership", label: "leadership" },
   { id: "film", label: "film" },
+];
+
+const filmReel = [
+  {
+    id: 1,
+    src: "/film-reel-01.mp4",
+    title: "Malawi Media Trip",
+    subtitle: "Donor Communications",
+  },
+  {
+    id: 2,
+    src: "/film-reel-02.mp4",
+    title: "Malawi Media Trip",
+    subtitle: "Donor Communications",
+  },
+  {
+    id: 3,
+    src: "/film-reel-03.mp4",
+    title: "Malawi Media Trip",
+    subtitle: "Donor Communications",
+  },
+  {
+    id: 4,
+    src: "/film-reel-04.mp4",
+    title: "Malawi Media Trip",
+    subtitle: "Donor Communications",
+  },
+  {
+    id: 5,
+    src: "/film-reel-05.mp4",
+    title: "Malawi Media Trip",
+    subtitle: "Donor Communications",
+  },
 ];
 
 const activities = [
@@ -58,7 +93,7 @@ const activities = [
     src: ista,
     title: "ISTA | Participant",
     subtitle: "Global Learning Through The Arts",
-    link: "https://www.instagram.com/p/DPG7lVSiKa1/?igsh=MWVzZzEyZnRnMW81Yg==",
+    link: "https://www.instagram.com/p/DXXNgrhiNDt/",
   },
   {
     id: 6,
@@ -66,6 +101,7 @@ const activities = [
     src: learningToBeHeard,
     title: "Learning To Be Heard | Scholarship Award",
     subtitle: "Global Public Speaking Challenge",
+    link: "https://www.instagram.com/p/DWRz-RDiHdf/",
   },
   {
     id: 7,
@@ -83,14 +119,30 @@ const activities = [
   },
   {
     id: 9,
+    sections: ["performing-arts"],
+    src: kissMeShowcase,
+    title: "Kiss Me | Singing Showcase",
+    subtitle: "Vocal Performance",
+    link: "https://www.instagram.com/p/DatKP8JoNfN/",
+  },
+  {
+    id: 10,
     sections: ["leadership"],
     src: sparkleQuizNight,
     title: "Quiz Night | Lead Organiser",
     subtitle: "Created For The Sparkle Foundation",
   },
   {
-    id: 10,
-    sections: ["film"],
+    id: 11,
+    sections: ["leadership"],
+    src: malawiMediaTrip,
+    title: "Malawi Media Trip | Media Lead",
+    subtitle: "Donor Communications | The Sparkle Foundation",
+    link: "https://www.instagram.com/p/DaudRm8iMpD/",
+  },
+  {
+    id: 12,
+    sections: ["leadership"],
     src: immerse,
     title: "Immerse Essay Competition | Honours",
     subtitle: "Writing Excellence Award",
@@ -102,11 +154,14 @@ export default function App() {
   const sectionsRef = useRef([]);
   const carouselRef = useRef(null);
   const carouselTrackRef = useRef(null);
+  const filmVideoRef = useRef(null);
   const [activeFilter, setActiveFilter] = useState(filters[0].id);
+  const [activeReelIndex, setActiveReelIndex] = useState(0);
   const filteredActivities = activities.filter(activity =>
     activity.sections.includes(activeFilter)
   );
   const carouselActivities = [...filteredActivities, ...filteredActivities];
+  const activeReel = filmReel[activeReelIndex];
 
   // Fade-in effect
   useEffect(() => {
@@ -200,9 +255,25 @@ export default function App() {
     };
   }, [activeFilter, filteredActivities.length]);
 
+  useEffect(() => {
+    filmVideoRef.current?.load();
+  }, [activeReelIndex]);
+
   const scrollToFooter = () => {
     const footer = document.getElementById("footer");
     footer?.scrollIntoView({ behavior: "smooth" });
+  };
+
+  const showReelClip = index => {
+    setActiveReelIndex((index + filmReel.length) % filmReel.length);
+  };
+
+  const showNextReelClip = () => {
+    showReelClip(activeReelIndex + 1);
+  };
+
+  const showPreviousReelClip = () => {
+    showReelClip(activeReelIndex - 1);
   };
 
   return (
@@ -257,7 +328,69 @@ export default function App() {
             ))}
           </div>
 
-          {filteredActivities.length > 0 ? (
+          {activeFilter === "film" ? (
+            <div className="film-reel">
+              <div className="film-feature">
+                <div className="film-player">
+                  <video
+                    ref={filmVideoRef}
+                    key={activeReel.src}
+                    className="film-video"
+                    controls
+                    playsInline
+                    onEnded={showNextReelClip}
+                  >
+                    <source src={activeReel.src} type="video/mp4" />
+                  </video>
+                </div>
+
+                <div className="film-copy">
+                  <h2>{activeReel.title}</h2>
+                  <p>{activeReel.subtitle}</p>
+                  <p>
+                    Three weeks in Malawi filming field media for donor
+                    communications with The Sparkle Foundation.
+                  </p>
+
+                  <div className="film-controls" aria-label="Film controls">
+                    <button type="button" onClick={showPreviousReelClip}>
+                      previous
+                    </button>
+                    <span>
+                      {activeReelIndex + 1} / {filmReel.length}
+                    </span>
+                    <button type="button" onClick={showNextReelClip}>
+                      next
+                    </button>
+                  </div>
+                </div>
+              </div>
+
+              <div className="continue-reel" aria-label="Continue watching">
+                <p>continue watching</p>
+                <div className="continue-track">
+                  {filmReel.map((clip, index) => (
+                    <button
+                      type="button"
+                      key={clip.id}
+                      className={`continue-card ${
+                        index === activeReelIndex ? "active" : ""
+                      }`}
+                      onClick={() => showReelClip(index)}
+                      aria-label={`Watch clip ${index + 1}`}
+                    >
+                      <video
+                        src={`${clip.src}#t=0.1`}
+                        muted
+                        playsInline
+                        preload="auto"
+                      />
+                    </button>
+                  ))}
+                </div>
+              </div>
+            </div>
+          ) : filteredActivities.length > 0 ? (
             <div
               className="carousel"
               aria-label="Selected activities"

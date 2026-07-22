@@ -179,6 +179,148 @@
   opacity: 0.7;
 }
 
+.film-reel {
+  max-width: 72rem;
+  margin: 0 auto;
+  padding: 0 3rem;
+}
+
+.film-feature {
+  display: grid;
+  grid-template-columns: minmax(0, 1.6fr) minmax(18rem, 0.8fr);
+  align-items: center;
+  gap: 3rem;
+}
+
+.film-player {
+  position: relative;
+  overflow: hidden;
+  background: #050505;
+}
+
+.film-player::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(
+      90deg,
+      #000 0%,
+      rgba(0, 0, 0, 0) 17%,
+      rgba(0, 0, 0, 0) 83%,
+      #000 100%
+    );
+  pointer-events: none;
+  z-index: 1;
+}
+
+.film-video {
+  width: 100%;
+  aspect-ratio: 16 / 10;
+  display: block;
+  object-fit: contain;
+  background: #050505;
+}
+
+.film-copy h2 {
+  font-size: clamp(2.1rem, 4vw, 4rem);
+  font-weight: 400;
+  line-height: 1;
+  margin-bottom: 1rem;
+}
+
+.film-copy p {
+  font-size: 1.08rem;
+  line-height: 1.55;
+  opacity: 0.76;
+}
+
+.film-copy p + p {
+  margin-top: 0.8rem;
+}
+
+.film-controls {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-top: 1.8rem;
+}
+
+.film-controls button,
+.continue-card {
+  appearance: none;
+  border: 0;
+  background: transparent;
+  color: #fff;
+  cursor: pointer;
+}
+
+.film-controls button {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.52);
+  font-size: 1rem;
+  opacity: 0.76;
+  padding: 0.25rem 0;
+  transition: opacity 0.3s ease, border-color 0.3s ease;
+}
+
+.film-controls button:hover,
+.film-controls button:focus-visible {
+  border-color: rgba(255, 255, 255, 0.95);
+  opacity: 1;
+}
+
+.film-controls button:focus-visible,
+.continue-card:focus-visible {
+  outline: 1px solid rgba(255, 255, 255, 0.72);
+  outline-offset: 0.35rem;
+}
+
+.film-controls span {
+  min-width: 3.2rem;
+  text-align: center;
+  opacity: 0.55;
+}
+
+.continue-reel {
+  margin-top: 2rem;
+}
+
+.continue-reel > p {
+  margin-bottom: 0.8rem;
+  opacity: 0.58;
+}
+
+.continue-track {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(8rem, 1fr));
+  gap: 0.8rem;
+}
+
+.continue-card {
+  min-width: 0;
+  opacity: 0.56;
+  text-align: left;
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.continue-card:hover,
+.continue-card:focus-visible,
+.continue-card.active {
+  opacity: 1;
+}
+
+.continue-card.active {
+  transform: translateY(-0.18rem);
+}
+
+.continue-card video {
+  width: 100%;
+  aspect-ratio: 16 / 10;
+  display: block;
+  object-fit: cover;
+  background: #111;
+}
+
 .image-wrapper {
   position: relative;
   width: 100%;
@@ -335,6 +477,30 @@ a {
     flex-basis: 82vw;
     height: 34rem;
     min-height: 28rem;
+  }
+
+  .film-reel {
+    padding-left: 1.25rem;
+    padding-right: 1.25rem;
+  }
+
+  .film-feature {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+
+  .film-copy h2 {
+    font-size: 2.35rem;
+  }
+
+  .continue-track {
+    display: flex;
+    overflow-x: auto;
+    padding-bottom: 0.4rem;
+  }
+
+  .continue-card {
+    flex: 0 0 9.5rem;
   }
 
   .section-selector {
