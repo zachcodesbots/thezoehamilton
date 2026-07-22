@@ -102,14 +102,42 @@
   padding: 2rem 0 6rem;
 }
 
-.activities-heading {
-  padding: 0 3rem 1.5rem;
+.section-selector {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: clamp(1.25rem, 4vw, 4rem);
+  padding: 0 3rem 2rem;
 }
 
-.activities-heading .section-kicker {
-  max-width: 72rem;
-  margin-left: auto;
-  margin-right: auto;
+.section-tab {
+  appearance: none;
+  border: 0;
+  border-bottom: 1px solid transparent;
+  border-radius: 0;
+  background: transparent;
+  color: #fff;
+  cursor: pointer;
+  font-size: clamp(1.05rem, 2vw, 1.6rem);
+  line-height: 1.2;
+  opacity: 0.52;
+  padding: 0.25rem 0 0.45rem;
+  transition: opacity 0.3s ease, border-color 0.3s ease;
+}
+
+.section-tab:hover,
+.section-tab:focus-visible {
+  opacity: 0.85;
+}
+
+.section-tab:focus-visible {
+  outline: 1px solid rgba(255, 255, 255, 0.72);
+  outline-offset: 0.45rem;
+}
+
+.section-tab.active {
+  border-color: rgba(255, 255, 255, 0.82);
+  opacity: 1;
 }
 
 .carousel {
@@ -121,13 +149,8 @@
   display: flex;
   width: max-content;
   gap: 1.5rem;
-  animation: carousel-rtl 56s linear infinite;
+  transform: translateX(0);
   will-change: transform;
-}
-
-.carousel:hover .carousel-track,
-.carousel:focus-within .carousel-track {
-  animation-play-state: paused;
 }
 
 .carousel-card {
@@ -140,6 +163,20 @@
 .carousel-card > div {
   display: block;
   height: 100%;
+}
+
+.empty-section {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 20rem;
+  padding: 2rem 3rem;
+  text-align: center;
+}
+
+.empty-section p {
+  font-size: clamp(1.3rem, 2.8vw, 2.4rem);
+  opacity: 0.7;
 }
 
 .image-wrapper {
@@ -227,16 +264,6 @@
   opacity: 0.8;
 }
 
-@keyframes carousel-rtl {
-  from {
-    transform: translateX(0);
-  }
-
-  to {
-    transform: translateX(calc(-50% - 0.75rem));
-  }
-}
-
 /* footer */
 .footer {
   display: flex;
@@ -263,7 +290,7 @@ a {
 @media (max-width: 760px) {
   .header,
   .about-section,
-  .activities-heading,
+  .section-selector,
   .footer {
     padding-left: 1.25rem;
     padding-right: 1.25rem;
@@ -310,6 +337,16 @@ a {
     min-height: 28rem;
   }
 
+  .section-selector {
+    gap: 1rem;
+    justify-content: space-between;
+    padding-bottom: 1.5rem;
+  }
+
+  .section-tab {
+    font-size: 1rem;
+  }
+
   .image-text {
     bottom: 1.25rem;
     left: 1.25rem;
@@ -341,6 +378,6 @@ a {
   }
 
   .carousel-track {
-    animation: none;
+    transform: none;
   }
 }

@@ -1,4 +1,4 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import "./App.css";
 
 import teenqueen from "./assets/teenqueen.jpg";
@@ -9,10 +9,20 @@ import worldburn from "./assets/worldburn.jpeg";
 import ista from "./assets/ista.jpeg";
 import zoeHeadshot from "./assets/zoe-headshot.png";
 import internationalYouthDay from "./assets/international-youth-day.png";
+import learningToBeHeard from "./assets/learning-to-be-heard.png";
+import sevenBridesShowcase from "./assets/seven-brides-showcase.png";
+import sparkleQuizNight from "./assets/sparkle-quiz-night.png";
+
+const filters = [
+  { id: "performing-arts", label: "performing arts" },
+  { id: "leadership", label: "leadership" },
+  { id: "film", label: "film" },
+];
 
 const activities = [
   {
     id: 1,
+    sections: ["performing-arts"],
     src: hamilton,
     title: "Hamilton | Burr",
     subtitle: "Blue Box Theatre",
@@ -20,6 +30,7 @@ const activities = [
   },
   {
     id: 2,
+    sections: ["performing-arts"],
     src: teenqueen,
     title: "We Will Rock You | Teen Queen",
     subtitle: "Teatru Salesjan",
@@ -27,6 +38,7 @@ const activities = [
   },
   {
     id: 3,
+    sections: ["performing-arts"],
     src: worldburn,
     title: "World Burn | Cady Heron",
     subtitle: "Blue Box Theatre",
@@ -34,6 +46,7 @@ const activities = [
   },
   {
     id: 4,
+    sections: ["performing-arts"],
     src: alibaba,
     title: "Ali Baba — The Panto | Ensemble",
     subtitle: "Manoel Theatre",
@@ -41,6 +54,7 @@ const activities = [
   },
   {
     id: 5,
+    sections: ["performing-arts"],
     src: ista,
     title: "ISTA | Participant",
     subtitle: "Global Learning Through The Arts",
@@ -48,12 +62,35 @@ const activities = [
   },
   {
     id: 6,
+    sections: ["leadership"],
+    src: learningToBeHeard,
+    title: "Learning To Be Heard | Scholarship Award",
+    subtitle: "Global Public Speaking Challenge",
+  },
+  {
+    id: 7,
+    sections: ["leadership"],
     src: internationalYouthDay,
     title: "International Youth Day | Organising Team",
     subtitle: "Kennedy Grove | 12 August",
   },
   {
-    id: 7,
+    id: 8,
+    sections: ["performing-arts"],
+    src: sevenBridesShowcase,
+    title: "7 Brides For 7 Brothers | Dance Showcase",
+    subtitle: "Teatru Salesjan",
+  },
+  {
+    id: 9,
+    sections: ["leadership"],
+    src: sparkleQuizNight,
+    title: "Quiz Night | Lead Organiser",
+    subtitle: "Created For The Sparkle Foundation",
+  },
+  {
+    id: 10,
+    sections: ["film"],
     src: immerse,
     title: "Immerse Essay Competition | Honours",
     subtitle: "Writing Excellence Award",
@@ -63,7 +100,13 @@ const activities = [
 
 export default function App() {
   const sectionsRef = useRef([]);
-  const carouselActivities = [...activities, ...activities];
+  const carouselRef = useRef(null);
+  const carouselTrackRef = useRef(null);
+  const [activeFilter, setActiveFilter] = useState(filters[0].id);
+  const filteredActivities = activities.filter(activity =>
+    activity.sections.includes(activeFilter)
+  );
+  const carouselActivities = [...filteredActivities, ...filteredActivities];
 
   // Fade-in effect
   useEffect(() => {
@@ -84,6 +127,78 @@ export default function App() {
 
     return () => observer.disconnect();
   }, []);
+
+  useEffect(() => {
+    const carousel = carouselRef.current;
+    const track = carouselTrackRef.current;
+
+    if (!carousel || !track || filteredActivities.length === 0) return;
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+
+    let animationFrame;
+    let lastTime = performance.now();
+    let offset = 0;
+    let paused = false;
+
+    const pause = () => {
+      paused = true;
+    };
+
+    const play = () => {
+      paused = false;
+    };
+
+    const animate = now => {
+      const delta = Math.min(now - lastTime, 40);
+      lastTime = now;
+
+      if (!paused) {
+        const gap = parseFloat(getComputedStyle(track).columnGap) || 0;
+        const loopWidth = track.scrollWidth / 2 + gap / 2;
+
+        if (loopWidth > 0) {
+          const viewportCenter = window.innerWidth / 2;
+          const cards = Array.from(track.children);
+          const closestDistance = cards.reduce((closest, card) => {
+            const rect = card.getBoundingClientRect();
+            const cardCenter = rect.left + rect.width / 2;
+            return Math.min(closest, Math.abs(cardCenter - viewportCenter));
+          }, Infinity);
+          const easingRange = Math.max(window.innerWidth * 0.32, 240);
+          const nearness = Math.max(
+            0,
+            1 - Math.min(closestDistance / easingRange, 1)
+          );
+          const speed = 0.072 * (1 - nearness * 0.58);
+
+          offset -= speed * delta;
+
+          if (Math.abs(offset) >= loopWidth) {
+            offset += loopWidth;
+          }
+
+          track.style.transform = `translateX(${offset}px)`;
+        }
+      }
+
+      animationFrame = requestAnimationFrame(animate);
+    };
+
+    carousel.addEventListener("pointerenter", pause);
+    carousel.addEventListener("pointerleave", play);
+    carousel.addEventListener("focusin", pause);
+    carousel.addEventListener("focusout", play);
+    animationFrame = requestAnimationFrame(animate);
+
+    return () => {
+      cancelAnimationFrame(animationFrame);
+      carousel.removeEventListener("pointerenter", pause);
+      carousel.removeEventListener("pointerleave", play);
+      carousel.removeEventListener("focusin", pause);
+      carousel.removeEventListener("focusout", play);
+      track.style.transform = "";
+    };
+  }, [activeFilter, filteredActivities.length]);
 
   const scrollToFooter = () => {
     const footer = document.getElementById("footer");
@@ -126,14 +241,35 @@ export default function App() {
           className="activities-section reveal-section"
           ref={el => (sectionsRef.current[1] = el)}
         >
-          <div className="activities-heading">
-            <p className="section-kicker">current activities</p>
+          <div className="section-selector" aria-label="Activity sections">
+            {filters.map(filter => (
+              <button
+                type="button"
+                key={filter.id}
+                className={`section-tab ${
+                  activeFilter === filter.id ? "active" : ""
+                }`}
+                onClick={() => setActiveFilter(filter.id)}
+                aria-pressed={activeFilter === filter.id}
+              >
+                {filter.label}
+              </button>
+            ))}
           </div>
 
-          <div className="carousel" aria-label="Current activities">
-            <div className="carousel-track">
+          {filteredActivities.length > 0 ? (
+            <div
+              className="carousel"
+              aria-label="Selected activities"
+              ref={carouselRef}
+            >
+              <div
+                className="carousel-track"
+                key={activeFilter}
+                ref={carouselTrackRef}
+              >
               {carouselActivities.map((img, i) => {
-                const isDuplicate = i >= activities.length;
+                const isDuplicate = i >= filteredActivities.length;
                 const cardContent = (
                   <div className="image-wrapper">
                     <img src={img.src} alt="" className="blur-edge" />
@@ -170,8 +306,13 @@ export default function App() {
                   </article>
                 );
               })}
+              </div>
             </div>
-          </div>
+          ) : (
+            <div className="empty-section">
+              <p>Film work coming soon.</p>
+            </div>
+          )}
         </section>
       </main>
 
