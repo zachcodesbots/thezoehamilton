@@ -23,12 +23,6 @@ const filters = [
 
 const filmReel = [
   {
-    id: 1,
-    src: "/videos/thank-you-zurich.mp4",
-    title: "A Thank You to Zurich Insurance",
-    subtitle: "The Sparkle Foundation",
-  },
-  {
     id: 2,
     src: "/videos/warm-welcome-malawi.mp4",
     title: "A Warm Welcome in Malawi",
@@ -56,6 +50,12 @@ const filmReel = [
     id: 6,
     src: "/videos/day-of-an-african-child.mp4",
     title: "Day of the African Child",
+    subtitle: "The Sparkle Foundation",
+  },
+  {
+    id: 1,
+    src: "/videos/thank-you-zurich.mp4",
+    title: "A Thank You to Zurich Insurance",
     subtitle: "The Sparkle Foundation",
   },
 ];
