@@ -5,11 +5,11 @@ import teenqueen from "./assets/teenqueen.jpg";
 import hamilton from "./assets/hamilton.jpg";
 import immerse from "./assets/immerse.jpg";
 import alibaba from "./assets/alibaba.jpeg";
-import ista from "./assets/ista.jpeg";
+import istaTerezin from "./assets/ista.jpeg";
+import istaSiracusa from "./assets/ista-siracusa.jpeg";
 import zoeHeadshot from "./assets/zoe-headshot.png";
 import internationalYouthDay from "./assets/international-youth-day.png";
 import learningToBeHeard from "./assets/learning-to-be-heard.png";
-import sevenBridesShowcase from "./assets/seven-brides-showcase.png";
 import sparkleQuizNight from "./assets/sparkle-quiz-night.png";
 import malawiMediaTrip from "./assets/malawi-media-trip.png";
 import worldburn from "./assets/worldburn-new.png";
@@ -24,33 +24,39 @@ const filters = [
 const filmReel = [
   {
     id: 1,
-    src: "/film-reel-01.mp4",
-    title: "Malawi Media Trip",
-    subtitle: "Donor Communications",
+    src: "/videos/thank-you-zurich.mp4",
+    title: "Thank You, Zurich Insurance",
+    subtitle: "The Sparkle Foundation",
   },
   {
     id: 2,
-    src: "/film-reel-02.mp4",
-    title: "Malawi Media Trip",
-    subtitle: "Donor Communications",
+    src: "/videos/nam.mp4",
+    title: "NAM",
+    subtitle: "The Sparkle Foundation",
   },
   {
     id: 3,
-    src: "/film-reel-03.mp4",
-    title: "Malawi Media Trip",
-    subtitle: "Donor Communications",
+    src: "/videos/vanessa-testimonial.mp4",
+    title: "Vanessa's Testimonial",
+    subtitle: "The Sparkle Foundation",
   },
   {
     id: 4,
-    src: "/film-reel-04.mp4",
-    title: "Malawi Media Trip",
-    subtitle: "Donor Communications",
+    src: "/videos/kitchen-vanessa.mp4",
+    title: "Kitchen with Vanessa",
+    subtitle: "The Sparkle Foundation",
   },
   {
     id: 5,
-    src: "/film-reel-05.mp4",
-    title: "Malawi Media Trip",
-    subtitle: "Donor Communications",
+    src: "/videos/community-mattress.mp4",
+    title: "Community Mattress",
+    subtitle: "The Sparkle Foundation",
+  },
+  {
+    id: 6,
+    src: "/videos/day-of-an-african-child.mp4",
+    title: "Day of an African Child",
+    subtitle: "The Sparkle Foundation",
   },
 ];
 
@@ -90,10 +96,18 @@ const activities = [
   {
     id: 5,
     sections: ["performing-arts"],
-    src: ista,
-    title: "ISTA | Participant",
-    subtitle: "Global Learning Through The Arts",
+    src: istaTerezin,
+    title: "ISTA - Global Learning Through the Arts | Participant",
+    subtitle: "Terezín",
     link: "https://www.instagram.com/p/DXXNgrhiNDt/",
+  },
+  {
+    id: 13,
+    sections: ["performing-arts"],
+    src: istaSiracusa,
+    title: "ISTA - Global Learning Through the Arts | Participant",
+    subtitle: "Siracusa",
+    link: "https://www.instagram.com/p/DPG7lVSiKa1/",
   },
   {
     id: 6,
@@ -111,13 +125,6 @@ const activities = [
     subtitle: "Kennedy Grove | 12 August",
   },
   {
-    id: 8,
-    sections: ["performing-arts"],
-    src: sevenBridesShowcase,
-    title: "7 Brides For 7 Brothers | Dance Showcase",
-    subtitle: "Blue Box Theatre",
-  },
-  {
     id: 9,
     sections: ["performing-arts"],
     src: kissMeShowcase,
@@ -131,6 +138,7 @@ const activities = [
     src: sparkleQuizNight,
     title: "Quiz Night | Lead Organiser",
     subtitle: "Created For The Sparkle Foundation",
+    link: "https://www.instagram.com/p/DJyms3FIiJO/",
   },
   {
     id: 11,
@@ -256,7 +264,14 @@ export default function App() {
   }, [activeFilter, filteredActivities.length]);
 
   useEffect(() => {
-    filmVideoRef.current?.load();
+    const video = filmVideoRef.current;
+    if (!video) return;
+
+    video.load();
+    const playPromise = video.play();
+    playPromise?.catch(() => {
+      // The controls remain available if a browser blocks autoplay.
+    });
   }, [activeReelIndex]);
 
   const scrollToFooter = () => {
@@ -299,11 +314,35 @@ export default function App() {
             <div className="about-copy">
               <p className="section-kicker">about</p>
               <h1>Zoe Hamilton</h1>
-              <p>
-                Malta-based performer drawn to bold characters, close harmony,
-                and stories with a little bite. Currently training, performing,
-                and building work across theatre, music, and movement.
+              <p className="bio-text">
+                Zoe Hamilton is a multidisciplinary artist working across the
+                performing arts and film. Currently, she is working with The
+                Sparkle Foundation: filming, editing, and designing social media
+                content and donor communications. With a passion for creativity
+                and learning, Zoe continues to develop her artistic practice
+                while exploring new opportunities within the creative industry.
               </p>
+
+              <div className="cv-actions" aria-label="Zoe Hamilton CV">
+                <details className="cv-details">
+                  <summary>preview CV</summary>
+                  <div className="cv-preview">
+                    <object
+                      data="/zoe-hamilton-cv.pdf#view=FitH"
+                      type="application/pdf"
+                      aria-label="Zoe Hamilton CV preview"
+                    >
+                      <p>
+                        Your browser cannot display this PDF.{" "}
+                        <a href="/zoe-hamilton-cv.pdf">Open the CV</a>.
+                      </p>
+                    </object>
+                  </div>
+                </details>
+                <a className="cv-download" href="/zoe-hamilton-cv.pdf" download>
+                  download CV
+                </a>
+              </div>
             </div>
           </div>
         </section>
@@ -336,8 +375,11 @@ export default function App() {
                     ref={filmVideoRef}
                     key={activeReel.src}
                     className="film-video"
+                    autoPlay
+                    muted
                     controls
                     playsInline
+                    preload="metadata"
                     onEnded={showNextReelClip}
                   >
                     <source src={activeReel.src} type="video/mp4" />
@@ -348,8 +390,11 @@ export default function App() {
                   <h2>{activeReel.title}</h2>
                   <p>{activeReel.subtitle}</p>
                   <p>
-                    Three weeks in Malawi filming field media for donor
-                    communications with The Sparkle Foundation.
+                    Filmed and edited in Malawi for donor communications and
+                    social media with The Sparkle Foundation.
+                  </p>
+                  <p className="autoplay-note">
+                    Plays automatically, muted. Use the controls for sound.
                   </p>
 
                   <div className="film-controls" aria-label="Film controls">
@@ -383,7 +428,7 @@ export default function App() {
                         src={`${clip.src}#t=0.1`}
                         muted
                         playsInline
-                        preload="auto"
+                        preload="metadata"
                       />
                     </button>
                   ))}

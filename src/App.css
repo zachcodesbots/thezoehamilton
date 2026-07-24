@@ -91,10 +91,71 @@
   margin-bottom: 1.4rem;
 }
 
-.about-copy p:last-child {
+.about-copy .bio-text {
   font-size: 1.35rem;
   line-height: 1.55;
   opacity: 0.82;
+}
+
+.cv-actions {
+  display: flex;
+  align-items: flex-start;
+  gap: 1.5rem;
+  margin-top: 1.75rem;
+}
+
+.cv-details summary,
+.cv-download {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.55);
+  cursor: pointer;
+  font-size: 1rem;
+  line-height: 1.4;
+  padding: 0.2rem 0;
+  transition: border-color 0.3s ease, opacity 0.3s ease;
+}
+
+.cv-details summary {
+  list-style: none;
+}
+
+.cv-details summary::-webkit-details-marker {
+  display: none;
+}
+
+.cv-details summary::after {
+  content: " +";
+}
+
+.cv-details[open] summary::after {
+  content: " −";
+}
+
+.cv-details summary:hover,
+.cv-details summary:focus-visible,
+.cv-download:hover,
+.cv-download:focus-visible {
+  border-color: #fff;
+  opacity: 0.75;
+}
+
+.cv-details summary:focus-visible,
+.cv-download:focus-visible {
+  outline: 1px solid rgba(255, 255, 255, 0.72);
+  outline-offset: 0.35rem;
+}
+
+.cv-preview {
+  width: min(34rem, 72vw);
+  height: min(44rem, 72vh);
+  margin-top: 1.25rem;
+  border: 1px solid #222;
+  background: #fff;
+}
+
+.cv-preview object {
+  width: 100%;
+  height: 100%;
+  display: block;
 }
 
 /* Activities */
@@ -187,8 +248,9 @@
 
 .film-feature {
   display: grid;
-  grid-template-columns: minmax(0, 1.6fr) minmax(18rem, 0.8fr);
+  grid-template-columns: minmax(16rem, 25rem) minmax(18rem, 30rem);
   align-items: center;
+  justify-content: center;
   gap: 3rem;
 }
 
@@ -196,6 +258,7 @@
   position: relative;
   overflow: hidden;
   background: #050505;
+  width: 100%;
 }
 
 .film-player::before {
@@ -216,9 +279,9 @@
 
 .film-video {
   width: 100%;
-  aspect-ratio: 16 / 10;
+  aspect-ratio: 9 / 16;
   display: block;
-  object-fit: contain;
+  object-fit: cover;
   background: #050505;
 }
 
@@ -237,6 +300,11 @@
 
 .film-copy p + p {
   margin-top: 0.8rem;
+}
+
+.film-copy .autoplay-note {
+  font-size: 0.88rem;
+  opacity: 0.5;
 }
 
 .film-controls {
@@ -292,7 +360,7 @@
 
 .continue-track {
   display: grid;
-  grid-template-columns: repeat(5, minmax(8rem, 1fr));
+  grid-template-columns: repeat(6, minmax(5rem, 1fr));
   gap: 0.8rem;
 }
 
@@ -315,7 +383,7 @@
 
 .continue-card video {
   width: 100%;
-  aspect-ratio: 16 / 10;
+  aspect-ratio: 9 / 16;
   display: block;
   object-fit: cover;
   background: #111;
@@ -469,8 +537,17 @@ a {
     font-size: 2.7rem;
   }
 
-  .about-copy p:last-child {
+  .about-copy .bio-text {
     font-size: 1.1rem;
+  }
+
+  .cv-actions {
+    gap: 1.25rem;
+  }
+
+  .cv-preview {
+    width: calc(100vw - 2.5rem);
+    height: 70vh;
   }
 
   .carousel-card {
